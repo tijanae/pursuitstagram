@@ -14,6 +14,14 @@ class loginVC: UIViewController {
     
 
     // MARK: -- ObjectProperties
+    
+    lazy var defaultImage: UIImageView = {
+    let defaultImage = UIImageView()
+        defaultImage.image = UIImage(named: "defaultpicture")
+        return defaultImage
+    }()
+    
+    
     lazy var emailTextField: UITextField = {
         let text = UITextField()
         return text
@@ -62,11 +70,54 @@ class loginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .blue
+        self.view.backgroundColor = .white
+        addSubViews()
+        constraints()
     }
     
     
     // MARK: -- Private Constraints, SubViews, Delegates
+    
+        private func setDelegates() {
+            
+        }
+        
+        private func addSubViews() {
+            view.addSubview(defaultImage)
+        }
+        
+        private func constraints() {
+            defaultImageConstraint()
+        }
+        
+        
+        private func defaultImageConstraint() {
+            defaultImage.translatesAutoresizingMaskIntoConstraints = false
+            [defaultImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+             defaultImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+             defaultImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+             defaultImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  300)].forEach{$0.isActive = true}
+        }
+    
+        private func emailTextConstraint() {
+            
+        }
+        
+        private func passwordTextConstraint() {
+            
+        }
+        
+        private func loginConstraint() {
+            
+        }
+        
+        private func signUpContraint() {
+            
+        }
+        
+        private func signInConstraint() {
+            
+        }
     
 //    private func
     

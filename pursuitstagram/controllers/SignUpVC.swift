@@ -79,7 +79,7 @@ class SignUpVC: UIViewController {
         }
 
             return nil
-        }
+    }
     
     
     func isPasswordValid(_ password : String) -> Bool {
@@ -95,14 +95,52 @@ class SignUpVC: UIViewController {
         
         
         // MARK: -- Private Constraints, SubViews, Delegates
+    
+    private func setDelegates() {
+        
+    }
+    
+    private func addSubViews() {
+        
+    }
+    
+    private func constraints() {
+        
+    }
+    
+//    private func usernameConstraint() {
+//
+//    }
+    
+    private func emailTextConstraint() {
+        
+    }
+    
+    private func passwordTextConstraint() {
+        
+    }
+    
+    private func cancelConstraint() {
+        
+    }
+    
+    private func signUpContraint() {
+        
+    }
+    
+    private func signInConstraint() {
+        
+    }
+    
+    
         
     //    private func
         
-        private func showError(_ message: String) {
-            signInError.text = message
-            signInError.alpha = 1
-            signInError.numberOfLines = 0
-        }
+    private func showError(_ message: String) {
+        signInError.text = message
+        signInError.alpha = 1
+        signInError.numberOfLines = 0
+    }
     
     private func transitionToLogin() {
         // transition to login automatically if user is created effectively
