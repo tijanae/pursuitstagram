@@ -16,6 +16,10 @@
 		4E72A21E238C923A00BE94AE /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E72A21D238C923A00BE94AE /* SignUpVC.swift */; };
 		4E72A220238C924D00BE94AE /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E72A21F238C924D00BE94AE /* MainVC.swift */; };
 		4E72A222238DAFE700BE94AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E72A221238DAFE700BE94AE /* GoogleService-Info.plist */; };
+		4EE7E38723A730B200272E7A /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38623A730B200272E7A /* String+Validations.swift */; };
+		4EE7E38A23A731DF00272E7A /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */; };
+		4EE7E38C23A731F500272E7A /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38B23A731F500272E7A /* FireStoreService.swift */; };
+		4EE7E38E23A7325700272E7A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38D23A7325700272E7A /* UserModel.swift */; };
 		6FD36C664149B3CCE8E5B373 /* Pods_pursuitstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 434F21FF939E6FD771BB27B7 /* Pods_pursuitstagramTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +48,10 @@
 		4E72A21D238C923A00BE94AE /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4E72A21F238C924D00BE94AE /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		4E72A221238DAFE700BE94AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4EE7E38623A730B200272E7A /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
+		4EE7E38B23A731F500272E7A /* FireStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
+		4EE7E38D23A7325700272E7A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		6D1D1795CBD9CB0BEEE2F4AC /* Pods-pursuitstagramTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pursuitstagramTests.debug.xcconfig"; path = "Target Support Files/Pods-pursuitstagramTests/Pods-pursuitstagramTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8655F334ED932B3779F7C39F /* Pods-pursuitstagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pursuitstagram.release.xcconfig"; path = "Target Support Files/Pods-pursuitstagram/Pods-pursuitstagram.release.xcconfig"; sourceTree = "<group>"; };
 		A0BF5CF713A63169DB821F18 /* Pods-pursuitstagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pursuitstagram.debug.xcconfig"; path = "Target Support Files/Pods-pursuitstagram/Pods-pursuitstagram.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,9 +110,11 @@
 		4E72A1F323884B3C00BE94AE /* pursuitstagram */ = {
 			isa = PBXGroup;
 			children = (
-				4E72A21A238890A100BE94AE /* Model */,
 				4E72A21823888F7F00BE94AE /* controllers */,
+				4EE7E38823A7319100272E7A /* Fire */,
+				4E72A21A238890A100BE94AE /* Model */,
 				4E72A2192388908400BE94AE /* customCells */,
+				4EE7E38523A7308C00272E7A /* extended */,
 				4E72A1FD23884B3D00BE94AE /* Assets.xcassets */,
 				4E72A1F423884B3C00BE94AE /* AppDelegate.swift */,
 				4E72A1F623884B3C00BE94AE /* SceneDelegate.swift */,
@@ -143,8 +153,26 @@
 		4E72A21A238890A100BE94AE /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4EE7E38D23A7325700272E7A /* UserModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4EE7E38523A7308C00272E7A /* extended */ = {
+			isa = PBXGroup;
+			children = (
+				4EE7E38623A730B200272E7A /* String+Validations.swift */,
+			);
+			path = extended;
+			sourceTree = "<group>";
+		};
+		4EE7E38823A7319100272E7A /* Fire */ = {
+			isa = PBXGroup;
+			children = (
+				4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */,
+				4EE7E38B23A731F500272E7A /* FireStoreService.swift */,
+			);
+			name = Fire;
 			sourceTree = "<group>";
 		};
 		AA14676189E172A1E578B28B /* Pods */ = {
@@ -330,6 +358,10 @@
 				4E72A1F523884B3C00BE94AE /* AppDelegate.swift in Sources */,
 				4E72A21C238C922700BE94AE /* loginVC.swift in Sources */,
 				4E72A1F723884B3C00BE94AE /* SceneDelegate.swift in Sources */,
+				4EE7E38C23A731F500272E7A /* FireStoreService.swift in Sources */,
+				4EE7E38A23A731DF00272E7A /* FirebaseAuth.swift in Sources */,
+				4EE7E38E23A7325700272E7A /* UserModel.swift in Sources */,
+				4EE7E38723A730B200272E7A /* String+Validations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,10 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-               
-               window = UIWindow(windowScene: scene)
-               window?.rootViewController = loginVC()
-               window?.makeKeyAndVisible()
+                
+
+                window = UIWindow(frame: UIScreen.main.bounds)
+                window?.windowScene = scene
+                
+                
+                if FirebaseAuthService.manager.currentUser != nil {
+                    window?.rootViewController = MainVC()
+                } else {
+                    window?.rootViewController = loginVC()
+                }
+                window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

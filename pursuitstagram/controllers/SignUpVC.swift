@@ -21,11 +21,17 @@ class SignUpVC: UIViewController {
     
     lazy var emailTextField: UITextField = {
         let text = UITextField()
+        text.text = "email"
+        text.borderStyle = .line
+        text.addTarget(self, action: #selector(validateFields), for: .editingChanged)
         return text
     }()
     
     lazy var passwordTextField: UITextField = {
         let passWord = UITextField()
+        passWord.text = "password"
+        passWord.borderStyle = .line
+        passWord.addTarget(self, action: #selector(validateFields), for: .editingChanged)
         return passWord
     }()
     
@@ -41,56 +47,93 @@ class SignUpVC: UIViewController {
     
     lazy var signUpButton: UIButton = {
         let signUp = UIButton()
-        signUp.addTarget(self, action: #selector(signUpPressed(_:)), for: .touchUpInside)
+        signUp.backgroundColor = .blue
+        signUp.setTitle("sign up", for: .normal)
+        signUp.addTarget(self, action: #selector(trySignUp), for: .touchUpInside)
         return signUp
     }()
     
     
-    @objc func signUpPressed(_ sender: UIButton){
-           let error = validateFields()
-           
-           if error != nil {
-               self.showError(error!)
-           } else {
-            let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            // creating the user on the database
-            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                if error != nil{
-                    self.showError("NO!")
-                } else{
-                    let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: ["uid": result!.user.uid])
-                    //
-                }
-            }
-               
-           }
-       }
 
-    func validateFields() -> String? {
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ==  "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                return "Please fill in all fields"
+
+    @objc func validateFields() {
+          guard emailTextField.hasText, passwordTextField.hasText else {
+            signUpButton.backgroundColor = .darkGray
+              signUpButton.isEnabled = false
+              return
+          }
+          signUpButton.isEnabled = true
+    signUpButton.backgroundColor = .darkGray
+      }
+    
+    @objc func trySignUp() {
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            showAlert(with: "Error", and: "Please fill out all fields.")
+            return
         }
         
-        let cleanedPassword = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if isPasswordValid(cleanedPassword) == false {
-            return "Passwords must be 6 characters long and include a number!"
+        guard email.isValidEmail else {
+            showAlert(with: "Error", and: "Please enter a valid email")
+            return
         }
-
-            return nil
+        
+        guard password.isValidPassword else {
+            showAlert(with: "Error", and: "Please enter a valid password. Passwords must have at least 8 characters.")
+            return
+        }
+        
+        FirebaseAuthService.manager.createNewUser(email: email.lowercased(), password: password) { [weak self] (result) in
+            self?.handleCreateAccountResponse(with: result)
+        }
+    }
+    
+    private func showAlert(with title: String, and message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
     }
     
     
-    func isPasswordValid(_ password : String) -> Bool {
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[0-9]).{5,}")
-        return passwordTest.evaluate(with: password)
+    private func handleCreateAccountResponse(with result: Result<User, Error>) {
+        DispatchQueue.main.async { [weak self] in
+            switch result {
+            case .success(let user):
+                FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
+                    self?.handleCreatedUserInFirestore(result: newResult)
+                    self?.showAlert(with: "Congrats!", and: "You've Joined this App")
+                }
+            case .failure(let error):
+                self?.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+            }
+        }
+    }
+    
+    private func handleCreatedUserInFirestore(result: Result<(), Error>) {
+        switch result {
+        case .success:
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                           else {
+                               return
+                       }
+
+                       UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
+                            let signupVC = MainVC()
+                            signupVC.modalPresentationStyle = .formSheet
+                            self.present(signupVC, animated: true, completion: nil)
+
+                                   }, completion: nil)
+        case .failure(let error):
+            self.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
+        }
     }
         
         
         override func viewDidLoad() {
             super.viewDidLoad()
             self.view.backgroundColor = .white
+            constraints()
+            addSubViews()
         }
         
         
@@ -101,10 +144,16 @@ class SignUpVC: UIViewController {
     }
     
     private func addSubViews() {
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(signUpButton)
         
     }
     
     private func constraints() {
+        emailTextConstraint()
+        passwordTextConstraint()
+        signInConstraint()
         
     }
     
@@ -113,24 +162,33 @@ class SignUpVC: UIViewController {
 //    }
     
     private func emailTextConstraint() {
+        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        [emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        emailTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+          emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)].forEach{$0.isActive = true}
         
     }
     
     private func passwordTextConstraint() {
-        
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        [passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 25),
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)].forEach{$0.isActive = true}
     }
     
-    private func cancelConstraint() {
-        
-    }
-    
-    private func signUpContraint() {
-        
-    }
     
     private func signInConstraint() {
-        
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        [signUpButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
+             signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 200),
+             signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100)].forEach{$0.isActive = true}
     }
+//    private func cancelConstraint() {
+//
+//    }
+    
+
     
     
         
