@@ -49,10 +49,28 @@ class UploadVC: UIViewController {
         showAlert(title: "No Image Selected", message: "Please select an image to upload.")
         return
     }
+        FirebaseStorage.postManager.storeImage(image: imageData, completion: { [weak self] (result) in
+            switch result {
+            case .success(let url):
+                let post = Post(creatorID: self!.user.uid, dateCreated: nil, imageUrl: url.absoluteString )
+                FirestoreService.manager.createPost(post: post) { (result) in
+                    switch result{
+                    case .success(()):
+                        self?.showAlert(title: "Success!", message: "Photo successfully uploaded.")
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            case .failure(let error):
+                self?.showAlert(title: "Error", message: "An error occurred while uploading photo.")
+                print(error)
+            }
+        })
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         setUpUpload()
         addSubViews()
         constraints()

@@ -55,6 +55,11 @@ class MainVC: UIViewController {
         self.view.backgroundColor = .white
         self.navigationItem.title = "hello \(hello())!"
         self.navigationItem.rightBarButtonItem = logout
+        postCollectionView.delegate = self
+        postCollectionView.dataSource = self
+        getPosts()
+        constrainBooksCollectionView()
+        
         
         
     }
@@ -70,18 +75,19 @@ class MainVC: UIViewController {
     }
     
     private func getPosts(){
-          
           FirestoreService.manager.getAllPosts { (result) in
               DispatchQueue.main.async {
                   switch result{
                   case .failure(let error):
                       print(error)
                   case .success(let data):
-                      self.userPosts = data.filter { (post) -> Bool in
-                          return post.creatorID != self.user.uid
-                      }
+                      self.userPosts = data
+//                    data.filter
+//                        { (post) -> Bool in
+//                          return post.creatorID != self.user.uid
+//                      }
+                      print(data.count)
                   }
-                  
               }
           }
         
@@ -103,7 +109,10 @@ class MainVC: UIViewController {
 
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        userPosts.count
+        
+        print("i got \(userPosts.count)")
+        
+        return userPosts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -113,7 +122,6 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.configureCell(post: data)
      
          return cell
-         
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
