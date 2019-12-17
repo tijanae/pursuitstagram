@@ -134,8 +134,24 @@ class loginVC: UIViewController {
             UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
 
                 let signupVC = MainVC()
-                signupVC.modalPresentationStyle = .formSheet
-                self.present(signupVC, animated: true, completion: nil)
+                let setVC = SettingsVC()
+                let upVC = UploadVC()
+                
+                signupVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+                setVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
+                upVC.tabBarItem = UITabBarItem(title: "Upload", image: UIImage(systemName: "square.and.arrow.up"), tag: 2)
+                
+                
+                let signUp = UINavigationController(rootViewController: signupVC)
+                let settings = UINavigationController(rootViewController: setVC)
+                let upload = UINavigationController(rootViewController: upVC)
+                
+                let tabBar = UITabBarController()
+                tabBar.viewControllers = [signUp, settings, upload]
+                
+                window.rootViewController = tabBar
+//                signupVC.modalPresentationStyle = .fullScreen
+//                self.present(signupVC, animated: true, completion: nil)
             }, completion: nil)
 
         }
@@ -158,7 +174,7 @@ class loginVC: UIViewController {
         }
         
         private func addSubViews() {
-//            view.addSubview(defaultImage)
+            view.addSubview(defaultImage)
             view.addSubview(emailTextField)
             view.addSubview(passwordTextField)
             view.addSubview(loginButton)
@@ -167,7 +183,7 @@ class loginVC: UIViewController {
         }
         
         private func constraints() {
-//            defaultImageConstraint()
+            defaultImageConstraint()
             emailTextConstraint()
             passwordTextConstraint()
             loginConstraint()

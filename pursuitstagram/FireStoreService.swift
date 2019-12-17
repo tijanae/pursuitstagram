@@ -85,35 +85,36 @@ class FirestoreService {
             }
         }
     }
-
-//    MARK: Faves
     
-//    func createfave(faved: FavedEvents, completion: @escaping (Result<(), Error>) -> ()) {
-//        let fields = faved.fieldsDict
-//        
-//        db.collection(FireStoreCollections.posts.rawValue).addDocument(data: fields) { (error) in
-//            if let error = error {
-//                completion(.failure(error))
-//            } else {
-//                completion(.success(()))
-//            }
-//        }
-//    }
-//    
-//    func getUserFaved(userId: String, completion: @escaping(Result<[FavedEvents], Error>) -> () ) {
-//        db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: userId).getDocuments { (snapshot, error) in
-//             if let error = error {
-//                 completion(.failure(error))
-//             } else {
-//                 let posts = snapshot?.documents.compactMap({ (snapshot) -> FavedEvents? in
-//                     let postId = snapshot.documentID
-//                     let post = FavedEvents(from: snapshot.data(), id: postId)
-//                     return post
-//                 })
-//                 completion(.success(posts ?? []))
-//             }
-//         }
-//     }
+    func getAllPosts( completion: @escaping (Result<[Post], Error>) -> ()) {
+    let completionHandler: FIRQuerySnapshotBlock = {(snapshot, error) in
+        if let error = error {
+            completion(.failure(error))
+        } else {
+            let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
+                let postID = snapshot.documentID
+                let post = Post(from: snapshot.data(), id: postID)
+                return post
+            })
+            completion(.success(posts ?? []))
+        }
+    }
+    }
+    
+    func getUserFromPost(creatorID: String, completion: @escaping (Result<AppUser,Error>) -> ()) {
+        db.collection(FireStoreCollections.users.rawValue).document(creatorID).getDocument { (snapshot, error)  in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot,
+                let data = snapshot.data() {
+                let userID = snapshot.documentID
+                let user = AppUser(from: data, id: userID)
+                if let appUser = user {
+                    completion(.success(appUser))
+                }
+            }
+        }
+    }
        
 
 

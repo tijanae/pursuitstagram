@@ -16,6 +16,11 @@
 		4E72A21E238C923A00BE94AE /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E72A21D238C923A00BE94AE /* SignUpVC.swift */; };
 		4E72A220238C924D00BE94AE /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E72A21F238C924D00BE94AE /* MainVC.swift */; };
 		4E72A222238DAFE700BE94AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E72A221238DAFE700BE94AE /* GoogleService-Info.plist */; };
+		4EDBCE3823A8012E001A0892 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDBCE3723A8012E001A0892 /* SettingsVC.swift */; };
+		4EDBCE3A23A833CA001A0892 /* fireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDBCE3923A833CA001A0892 /* fireStorage.swift */; };
+		4EDBCE3C23A83FBD001A0892 /* mainCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDBCE3B23A83FBD001A0892 /* mainCVC.swift */; };
+		4EDBCE3E23A84B9A001A0892 /* postModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDBCE3D23A84B9A001A0892 /* postModel.swift */; };
+		4EDBCE4023A853F3001A0892 /* UploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDBCE3F23A853F3001A0892 /* UploadVC.swift */; };
 		4EE7E38723A730B200272E7A /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38623A730B200272E7A /* String+Validations.swift */; };
 		4EE7E38A23A731DF00272E7A /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */; };
 		4EE7E38C23A731F500272E7A /* FireStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7E38B23A731F500272E7A /* FireStoreService.swift */; };
@@ -48,6 +53,11 @@
 		4E72A21D238C923A00BE94AE /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4E72A21F238C924D00BE94AE /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		4E72A221238DAFE700BE94AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4EDBCE3723A8012E001A0892 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		4EDBCE3923A833CA001A0892 /* fireStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fireStorage.swift; sourceTree = "<group>"; };
+		4EDBCE3B23A83FBD001A0892 /* mainCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainCVC.swift; sourceTree = "<group>"; };
+		4EDBCE3D23A84B9A001A0892 /* postModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postModel.swift; sourceTree = "<group>"; };
+		4EDBCE3F23A853F3001A0892 /* UploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVC.swift; sourceTree = "<group>"; };
 		4EE7E38623A730B200272E7A /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4EE7E38B23A731F500272E7A /* FireStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreService.swift; sourceTree = "<group>"; };
@@ -111,9 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				4E72A21823888F7F00BE94AE /* controllers */,
-				4EE7E38823A7319100272E7A /* Fire */,
-				4E72A21A238890A100BE94AE /* Model */,
 				4E72A2192388908400BE94AE /* customCells */,
+				4E72A21A238890A100BE94AE /* Model */,
+				4EE7E38823A7319100272E7A /* Fire */,
 				4EE7E38523A7308C00272E7A /* extended */,
 				4E72A1FD23884B3D00BE94AE /* Assets.xcassets */,
 				4E72A1F423884B3C00BE94AE /* AppDelegate.swift */,
@@ -139,6 +149,8 @@
 				4E72A21B238C922700BE94AE /* loginVC.swift */,
 				4E72A21D238C923A00BE94AE /* SignUpVC.swift */,
 				4E72A21F238C924D00BE94AE /* MainVC.swift */,
+				4EDBCE3F23A853F3001A0892 /* UploadVC.swift */,
+				4EDBCE3723A8012E001A0892 /* SettingsVC.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -146,6 +158,7 @@
 		4E72A2192388908400BE94AE /* customCells */ = {
 			isa = PBXGroup;
 			children = (
+				4EDBCE3B23A83FBD001A0892 /* mainCVC.swift */,
 			);
 			path = customCells;
 			sourceTree = "<group>";
@@ -154,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				4EE7E38D23A7325700272E7A /* UserModel.swift */,
+				4EDBCE3D23A84B9A001A0892 /* postModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,6 +185,7 @@
 			children = (
 				4EE7E38923A731DF00272E7A /* FirebaseAuth.swift */,
 				4EE7E38B23A731F500272E7A /* FireStoreService.swift */,
+				4EDBCE3923A833CA001A0892 /* fireStorage.swift */,
 			);
 			name = Fire;
 			sourceTree = "<group>";
@@ -357,11 +372,16 @@
 				4E72A220238C924D00BE94AE /* MainVC.swift in Sources */,
 				4E72A1F523884B3C00BE94AE /* AppDelegate.swift in Sources */,
 				4E72A21C238C922700BE94AE /* loginVC.swift in Sources */,
+				4EDBCE3E23A84B9A001A0892 /* postModel.swift in Sources */,
 				4E72A1F723884B3C00BE94AE /* SceneDelegate.swift in Sources */,
 				4EE7E38C23A731F500272E7A /* FireStoreService.swift in Sources */,
 				4EE7E38A23A731DF00272E7A /* FirebaseAuth.swift in Sources */,
 				4EE7E38E23A7325700272E7A /* UserModel.swift in Sources */,
 				4EE7E38723A730B200272E7A /* String+Validations.swift in Sources */,
+				4EDBCE3C23A83FBD001A0892 /* mainCVC.swift in Sources */,
+				4EDBCE3A23A833CA001A0892 /* fireStorage.swift in Sources */,
+				4EDBCE3823A8012E001A0892 /* SettingsVC.swift in Sources */,
+				4EDBCE4023A853F3001A0892 /* UploadVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

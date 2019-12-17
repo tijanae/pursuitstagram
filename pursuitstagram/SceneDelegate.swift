@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 
                 if FirebaseAuthService.manager.currentUser != nil {
-                    window?.rootViewController = MainVC()
+                    window?.rootViewController = tabBarController()
                 } else {
                     window?.rootViewController = loginVC()
                 }
@@ -58,13 +58,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-//    private func chooseIntialVC() -> UIViewController{
-//
-//        /*
-//         if userDefault == to nil - set root to return login else return tabbarVC
-//         */
-//return UIViewController()
-//    }
+    private func tabBarController() -> UITabBarController {
+        let firstVC = MainVC()
+        let secondVC = SettingsVC()
+        let thirdVC = UploadVC()
+        
+        firstVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        secondVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
+        thirdVC.tabBarItem = UITabBarItem(title: "Upload", image: UIImage(systemName: "square.and.arrow.up"), tag: 2)
+        
+        let nav = UINavigationController(rootViewController: firstVC)
+        
+        let tabVC = UITabBarController()
+        tabVC.setViewControllers([nav, secondVC, thirdVC], animated: false)
+        return tabVC
+    }
 
 
 }

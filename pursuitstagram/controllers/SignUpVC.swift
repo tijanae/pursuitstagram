@@ -14,10 +14,10 @@ class SignUpVC: UIViewController {
     
     // MARK: -- ObjectProperties
     
-    lazy var username: UITextField = {
-        let usersName = UITextField()
-        return usersName
-    }()
+//    lazy var username: UITextField = {
+//        let usersName = UITextField()
+//        return usersName
+//    }()
     
     lazy var emailTextField: UITextField = {
         let text = UITextField()
@@ -53,6 +53,11 @@ class SignUpVC: UIViewController {
         return signUp
     }()
     
+    lazy var defaultImage: UIImageView = {
+    let defaultImage = UIImageView()
+        defaultImage.image = UIImage(named: "defaultpicture")
+        return defaultImage
+    }()
     
 
 
@@ -99,8 +104,9 @@ class SignUpVC: UIViewController {
             switch result {
             case .success(let user):
                 FirestoreService.manager.createAppUser(user: AppUser(from: user)) { [weak self] newResult in
-                    self?.handleCreatedUserInFirestore(result: newResult)
-                    self?.showAlert(with: "Congrats!", and: "You've Joined this App")
+                    
+//                    self?.showAlert(with: "Congrats!", and: "You've Joined this App")
+                self?.handleCreatedUserInFirestore(result: newResult)
                 }
             case .failure(let error):
                 self?.showAlert(with: "Error creating user", and: "An error occured while creating new account \(error)")
@@ -119,7 +125,7 @@ class SignUpVC: UIViewController {
 
                        UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
                             let signupVC = MainVC()
-                            signupVC.modalPresentationStyle = .formSheet
+                            signupVC.modalPresentationStyle = .fullScreen
                             self.present(signupVC, animated: true, completion: nil)
 
                                    }, completion: nil)
@@ -132,8 +138,8 @@ class SignUpVC: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             self.view.backgroundColor = .white
-            constraints()
             addSubViews()
+            constraints()
         }
         
         
@@ -145,6 +151,7 @@ class SignUpVC: UIViewController {
     
     private func addSubViews() {
         view.addSubview(emailTextField)
+//        view.addSubview(defaultImage)
         view.addSubview(passwordTextField)
         view.addSubview(signUpButton)
         
@@ -152,6 +159,7 @@ class SignUpVC: UIViewController {
     
     private func constraints() {
         emailTextConstraint()
+//        defaultImageConstraint()
         passwordTextConstraint()
         signInConstraint()
         
@@ -160,6 +168,14 @@ class SignUpVC: UIViewController {
 //    private func usernameConstraint() {
 //
 //    }
+    
+    private func defaultImageConstraint() {
+        defaultImage.translatesAutoresizingMaskIntoConstraints = false
+        [defaultImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+         defaultImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+         defaultImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+         defaultImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  300)].forEach{$0.isActive = true}
+    }
     
     private func emailTextConstraint() {
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -184,26 +200,16 @@ class SignUpVC: UIViewController {
              signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 200),
              signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100)].forEach{$0.isActive = true}
     }
-//    private func cancelConstraint() {
-//
-//    }
-    
+
 
     
     
-        
-    //    private func
-        
-    private func showError(_ message: String) {
-        signInError.text = message
-        signInError.alpha = 1
-        signInError.numberOfLines = 0
-    }
-    
-    private func transitionToLogin() {
-        // transition to login automatically if user is created effectively
-        print("ayeee a user was created")
-    }
     
 
 }
+
+
+/*
+ to dos
+ - alert for successful  user creation.
+ */
